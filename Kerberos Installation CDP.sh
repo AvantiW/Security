@@ -36,8 +36,8 @@ $ sudo /etc/init.d/krb5-admin-server restart
 ##connecting to admin server
 $ sudo kadmin.local
 
-## creating a orincipal
-$ addprinc <principal_name>
+## creating a principal
+## $ addprinc <principal_name>
 
 ## create admin principal
 $ addprinc cm/admin (here name could be anything)
@@ -50,6 +50,7 @@ $ sudo /etc/init.d/krb5-admin-server restart
 
 
 ## Install Kerberos Clients
+## Install this on all remaining hosts
 $ sudo apt-get install krb5-user -y
 
 ## initialize TGT 
@@ -67,7 +68,7 @@ $ kdestroy
 >> give KDC Server Host >> give KDC Admin Server Host
 >> give Maximum Renewable Life for Principals = 7
 >> select Kerberos Encryption Types = aes256-cts (important configuration)
->> Enter further details >> continue 
+>> Enter account credentials for admin principal >> continue 
 
 ## Create a principal for hdfs superuser
 >>go under KDC
@@ -75,6 +76,7 @@ $ sudo kadmin.local
 addprinc hdfs
 
 >> go to worker node
+$ su hdfs
 $ kinit -p hdfs
 $ klist
 $ hdfs dfs -ls /  (this should run)
